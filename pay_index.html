@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="google" content="notranslate" />
+
+  <!-- OG (카카오톡 미리보기) -->
   <meta property="og:locale" content="ko_KR" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="계좌번호 복사" />
   <meta property="og:description" content="국민은행 662601-04-035762" />
+  <meta property="og:url" content="https://kitchenware-ko.github.io/pay/" />
+  <!-- 필요하면 OG 이미지도 추가 가능:
+  <meta property="og:image" content="https://kitchenware-ko.github.io/pay/300x.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  -->
 
   <title>계좌번호 복사</title>
 
@@ -24,7 +32,7 @@
       --btn-radius:20px;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
@@ -49,17 +57,17 @@
       text-align:center;
     }
 
-    /* 브랜드 로고 */
+    /* 로고 */
     .brand{
       display:flex;
       justify-content:center;
       margin-bottom:14px;
     }
-
     .brand-logo{
       max-width:150px;
       width:100%;
       height:auto;
+      display:block;
     }
 
     /* 계좌 박스 */
@@ -70,19 +78,18 @@
       background:#f9fafb;
       margin-bottom:18px;
     }
-
     .bank{
       margin:0 0 6px 0;
       font-size:15px;
       font-weight:700;
       color:var(--muted);
     }
-
     .acct{
       margin:0;
       font-size:28px;
       font-weight:900;
       letter-spacing:-0.02em;
+      color:var(--text);
     }
 
     /* 복사 버튼 */
@@ -101,11 +108,9 @@
       gap:8px;
       cursor:pointer;
       -webkit-tap-highlight-color:transparent;
+      transition:transform .05s ease;
     }
-
-    .btn:active{
-      transform:translateY(1px);
-    }
+    .btn:active{ transform:translateY(1px); }
 
     .hint{
       margin-top:10px;
@@ -128,20 +133,17 @@
       pointer-events:none;
       transition:opacity .2s ease;
     }
-
-    .toast.show{
-      opacity:1;
-    }
+    .toast.show{ opacity:1; }
   </style>
 </head>
 
 <body>
   <main class="wrap">
-    <section class="card">
-      <!-- 로고 -->
+    <section class="card" aria-label="계좌번호 복사">
+      <!-- 로고 (pay 저장소에 300x.png 업로드되어 있어야 함) -->
       <div class="brand">
         <img
-          src="https://kitchenware-ko.github.io/nav/pay/300x.png"
+          src="https://kitchenware-ko.github.io/pay/300x.png"
           alt="DAEHAN CORPORATION"
           class="brand-logo"
         />
@@ -154,9 +156,7 @@
       </div>
 
       <!-- 복사 버튼 -->
-      <button class="btn" id="copyBtn" type="button">
-        📋 계좌번호 복사
-      </button>
+      <button class="btn" id="copyBtn" type="button">📋 계좌번호 복사</button>
       <p class="hint">버튼을 누르면 클립보드에 복사됩니다.</p>
     </section>
   </main>
@@ -171,7 +171,7 @@
 
       function showToast(){
         toast.classList.add("show");
-        setTimeout(()=>toast.classList.remove("show"),1400);
+        setTimeout(() => toast.classList.remove("show"), 1400);
       }
 
       async function copy(){
@@ -179,10 +179,10 @@
           if(navigator.clipboard && window.isSecureContext){
             await navigator.clipboard.writeText(text);
           }else{
-            const ta=document.createElement("textarea");
-            ta.value=text;
-            ta.style.position="fixed";
-            ta.style.top="-9999px";
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.top = "-9999px";
             document.body.appendChild(ta);
             ta.select();
             document.execCommand("copy");
